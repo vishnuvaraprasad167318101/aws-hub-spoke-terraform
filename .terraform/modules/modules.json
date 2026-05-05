@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"compliance","Source":"./modules/compliance","Dir":"modules/compliance"},{"Key":"hub_vpc","Source":"./modules/hub-vpc","Dir":"modules/hub-vpc"},{"Key":"spoke_vpcs","Source":"./modules/spoke-vpc","Dir":"modules/spoke-vpc"},{"Key":"transit_gateway","Source":"./modules/transit-gateway","Dir":"modules/transit-gateway"}]}
