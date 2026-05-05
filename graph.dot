@@ -1,0 +1,139 @@
+﻿digraph G {
+  rankdir = "RL";
+  node [shape = rect, fontname = "sans-serif"];
+  "aws_ec2_transit_gateway_vpc_attachment.spoke" [label="aws_ec2_transit_gateway_vpc_attachment.spoke"];
+  subgraph "cluster_module.compliance" {
+    label = "module.compliance"
+    fontname = "sans-serif"
+    "module.compliance.data.archive_file.lambda_zip" [label="data.archive_file.lambda_zip"];
+    "module.compliance.data.aws_caller_identity.current" [label="data.aws_caller_identity.current"];
+    "module.compliance.data.aws_region.current" [label="data.aws_region.current"];
+    "module.compliance.aws_cloudwatch_metric_alarm.lambda_errors" [label="aws_cloudwatch_metric_alarm.lambda_errors"];
+    "module.compliance.aws_config_config_rule.restricted_rdp" [label="aws_config_config_rule.restricted_rdp"];
+    "module.compliance.aws_config_config_rule.restricted_ssh" [label="aws_config_config_rule.restricted_ssh"];
+    "module.compliance.aws_config_config_rule.s3_public_access_prohibited" [label="aws_config_config_rule.s3_public_access_prohibited"];
+    "module.compliance.aws_config_config_rule.vpc_flow_logs_enabled" [label="aws_config_config_rule.vpc_flow_logs_enabled"];
+    "module.compliance.aws_config_configuration_recorder.main" [label="aws_config_configuration_recorder.main"];
+    "module.compliance.aws_config_configuration_recorder_status.main" [label="aws_config_configuration_recorder_status.main"];
+    "module.compliance.aws_config_delivery_channel.main" [label="aws_config_delivery_channel.main"];
+    "module.compliance.aws_iam_role.config" [label="aws_iam_role.config"];
+    "module.compliance.aws_iam_role.lambda_remediation" [label="aws_iam_role.lambda_remediation"];
+    "module.compliance.aws_iam_role_policy.lambda_remediation" [label="aws_iam_role_policy.lambda_remediation"];
+    "module.compliance.aws_iam_role_policy_attachment.config" [label="aws_iam_role_policy_attachment.config"];
+    "module.compliance.aws_lambda_function.remediation" [label="aws_lambda_function.remediation"];
+    "module.compliance.aws_lambda_permission.config" [label="aws_lambda_permission.config"];
+    "module.compliance.aws_s3_bucket.config" [label="aws_s3_bucket.config"];
+    "module.compliance.aws_s3_bucket_public_access_block.config" [label="aws_s3_bucket_public_access_block.config"];
+    "module.compliance.aws_sns_topic.compliance_alerts" [label="aws_sns_topic.compliance_alerts"];
+    "module.compliance.aws_sns_topic_subscription.email" [label="aws_sns_topic_subscription.email"];
+  }
+  subgraph "cluster_module.hub_vpc" {
+    label = "module.hub_vpc"
+    fontname = "sans-serif"
+    "module.hub_vpc.aws_cloudwatch_log_group.flow_logs" [label="aws_cloudwatch_log_group.flow_logs"];
+    "module.hub_vpc.aws_default_security_group.hub_default" [label="aws_default_security_group.hub_default"];
+    "module.hub_vpc.aws_eip.nat" [label="aws_eip.nat"];
+    "module.hub_vpc.aws_flow_log.hub" [label="aws_flow_log.hub"];
+    "module.hub_vpc.aws_iam_role.flow_logs" [label="aws_iam_role.flow_logs"];
+    "module.hub_vpc.aws_iam_role_policy.flow_logs" [label="aws_iam_role_policy.flow_logs"];
+    "module.hub_vpc.aws_internet_gateway.hub" [label="aws_internet_gateway.hub"];
+    "module.hub_vpc.aws_nat_gateway.hub" [label="aws_nat_gateway.hub"];
+    "module.hub_vpc.aws_route_table.private" [label="aws_route_table.private"];
+    "module.hub_vpc.aws_route_table.public" [label="aws_route_table.public"];
+    "module.hub_vpc.aws_route_table_association.private" [label="aws_route_table_association.private"];
+    "module.hub_vpc.aws_route_table_association.public" [label="aws_route_table_association.public"];
+    "module.hub_vpc.aws_subnet.private" [label="aws_subnet.private"];
+    "module.hub_vpc.aws_subnet.public" [label="aws_subnet.public"];
+    "module.hub_vpc.aws_vpc.hub" [label="aws_vpc.hub"];
+  }
+  subgraph "cluster_module.spoke_vpcs" {
+    label = "module.spoke_vpcs"
+    fontname = "sans-serif"
+    "module.spoke_vpcs.aws_cloudwatch_log_group.flow_logs" [label="aws_cloudwatch_log_group.flow_logs"];
+    "module.spoke_vpcs.aws_default_security_group.deny_all" [label="aws_default_security_group.deny_all"];
+    "module.spoke_vpcs.aws_flow_log.spoke" [label="aws_flow_log.spoke"];
+    "module.spoke_vpcs.aws_iam_role.flow_logs" [label="aws_iam_role.flow_logs"];
+    "module.spoke_vpcs.aws_iam_role_policy.flow_logs" [label="aws_iam_role_policy.flow_logs"];
+    "module.spoke_vpcs.aws_route_table.private" [label="aws_route_table.private"];
+    "module.spoke_vpcs.aws_route_table_association.private" [label="aws_route_table_association.private"];
+    "module.spoke_vpcs.aws_subnet.private" [label="aws_subnet.private"];
+    "module.spoke_vpcs.aws_vpc.spoke" [label="aws_vpc.spoke"];
+  }
+  subgraph "cluster_module.transit_gateway" {
+    label = "module.transit_gateway"
+    fontname = "sans-serif"
+    "module.transit_gateway.aws_ec2_transit_gateway.main" [label="aws_ec2_transit_gateway.main"];
+    "module.transit_gateway.aws_ec2_transit_gateway_route.spoke_default_to_hub" [label="aws_ec2_transit_gateway_route.spoke_default_to_hub"];
+    "module.transit_gateway.aws_ec2_transit_gateway_route_table.hub" [label="aws_ec2_transit_gateway_route_table.hub"];
+    "module.transit_gateway.aws_ec2_transit_gateway_route_table.spoke" [label="aws_ec2_transit_gateway_route_table.spoke"];
+    "module.transit_gateway.aws_ec2_transit_gateway_route_table_association.hub" [label="aws_ec2_transit_gateway_route_table_association.hub"];
+    "module.transit_gateway.aws_ec2_transit_gateway_route_table_propagation.hub_to_spoke_rt" [label="aws_ec2_transit_gateway_route_table_propagation.hub_to_spoke_rt"];
+    "module.transit_gateway.aws_ec2_transit_gateway_vpc_attachment.hub" [label="aws_ec2_transit_gateway_vpc_attachment.hub"];
+    "module.transit_gateway.aws_route.hub_to_spokes" [label="aws_route.hub_to_spokes"];
+  }
+  "aws_ec2_transit_gateway_vpc_attachment.spoke" -> "module.spoke_vpcs.aws_default_security_group.deny_all";
+  "aws_ec2_transit_gateway_vpc_attachment.spoke" -> "module.spoke_vpcs.aws_flow_log.spoke";
+  "aws_ec2_transit_gateway_vpc_attachment.spoke" -> "module.spoke_vpcs.aws_iam_role_policy.flow_logs";
+  "aws_ec2_transit_gateway_vpc_attachment.spoke" -> "module.spoke_vpcs.aws_route_table_association.private";
+  "module.compliance.aws_cloudwatch_metric_alarm.lambda_errors" -> "module.compliance.aws_lambda_function.remediation";
+  "module.compliance.aws_config_config_rule.restricted_rdp" -> "module.compliance.aws_config_configuration_recorder_status.main";
+  "module.compliance.aws_config_config_rule.restricted_ssh" -> "module.compliance.aws_config_configuration_recorder_status.main";
+  "module.compliance.aws_config_config_rule.s3_public_access_prohibited" -> "module.compliance.aws_config_configuration_recorder_status.main";
+  "module.compliance.aws_config_config_rule.vpc_flow_logs_enabled" -> "module.compliance.aws_config_configuration_recorder_status.main";
+  "module.compliance.aws_config_configuration_recorder.main" -> "module.compliance.aws_iam_role.config";
+  "module.compliance.aws_config_configuration_recorder_status.main" -> "module.compliance.aws_config_delivery_channel.main";
+  "module.compliance.aws_config_delivery_channel.main" -> "module.compliance.aws_config_configuration_recorder.main";
+  "module.compliance.aws_config_delivery_channel.main" -> "module.compliance.aws_s3_bucket.config";
+  "module.compliance.aws_config_delivery_channel.main" -> "module.compliance.aws_sns_topic.compliance_alerts";
+  "module.compliance.aws_iam_role_policy.lambda_remediation" -> "module.compliance.aws_iam_role.lambda_remediation";
+  "module.compliance.aws_iam_role_policy.lambda_remediation" -> "module.compliance.aws_sns_topic.compliance_alerts";
+  "module.compliance.aws_iam_role_policy_attachment.config" -> "module.compliance.aws_iam_role.config";
+  "module.compliance.aws_lambda_function.remediation" -> "module.compliance.data.archive_file.lambda_zip";
+  "module.compliance.aws_lambda_function.remediation" -> "module.compliance.aws_iam_role.lambda_remediation";
+  "module.compliance.aws_lambda_function.remediation" -> "module.compliance.aws_sns_topic.compliance_alerts";
+  "module.compliance.aws_lambda_permission.config" -> "module.compliance.data.aws_caller_identity.current";
+  "module.compliance.aws_lambda_permission.config" -> "module.compliance.data.aws_region.current";
+  "module.compliance.aws_lambda_permission.config" -> "module.compliance.aws_lambda_function.remediation";
+  "module.compliance.aws_s3_bucket.config" -> "module.compliance.data.aws_caller_identity.current";
+  "module.compliance.aws_s3_bucket_public_access_block.config" -> "module.compliance.aws_s3_bucket.config";
+  "module.compliance.aws_sns_topic_subscription.email" -> "module.compliance.aws_sns_topic.compliance_alerts";
+  "module.hub_vpc.aws_default_security_group.hub_default" -> "module.hub_vpc.aws_vpc.hub";
+  "module.hub_vpc.aws_flow_log.hub" -> "module.hub_vpc.aws_cloudwatch_log_group.flow_logs";
+  "module.hub_vpc.aws_flow_log.hub" -> "module.hub_vpc.aws_iam_role.flow_logs";
+  "module.hub_vpc.aws_flow_log.hub" -> "module.hub_vpc.aws_vpc.hub";
+  "module.hub_vpc.aws_iam_role_policy.flow_logs" -> "module.hub_vpc.aws_iam_role.flow_logs";
+  "module.hub_vpc.aws_internet_gateway.hub" -> "module.hub_vpc.aws_vpc.hub";
+  "module.hub_vpc.aws_nat_gateway.hub" -> "module.hub_vpc.aws_eip.nat";
+  "module.hub_vpc.aws_nat_gateway.hub" -> "module.hub_vpc.aws_internet_gateway.hub";
+  "module.hub_vpc.aws_nat_gateway.hub" -> "module.hub_vpc.aws_subnet.public";
+  "module.hub_vpc.aws_route_table.private" -> "module.hub_vpc.aws_nat_gateway.hub";
+  "module.hub_vpc.aws_route_table.public" -> "module.hub_vpc.aws_internet_gateway.hub";
+  "module.hub_vpc.aws_route_table_association.private" -> "module.hub_vpc.aws_route_table.private";
+  "module.hub_vpc.aws_route_table_association.private" -> "module.hub_vpc.aws_subnet.private";
+  "module.hub_vpc.aws_route_table_association.public" -> "module.hub_vpc.aws_route_table.public";
+  "module.hub_vpc.aws_route_table_association.public" -> "module.hub_vpc.aws_subnet.public";
+  "module.hub_vpc.aws_subnet.private" -> "module.hub_vpc.aws_vpc.hub";
+  "module.hub_vpc.aws_subnet.public" -> "module.hub_vpc.aws_vpc.hub";
+  "module.spoke_vpcs.aws_default_security_group.deny_all" -> "module.spoke_vpcs.aws_vpc.spoke";
+  "module.spoke_vpcs.aws_flow_log.spoke" -> "module.spoke_vpcs.aws_cloudwatch_log_group.flow_logs";
+  "module.spoke_vpcs.aws_flow_log.spoke" -> "module.spoke_vpcs.aws_iam_role.flow_logs";
+  "module.spoke_vpcs.aws_flow_log.spoke" -> "module.spoke_vpcs.aws_vpc.spoke";
+  "module.spoke_vpcs.aws_iam_role_policy.flow_logs" -> "module.spoke_vpcs.aws_iam_role.flow_logs";
+  "module.spoke_vpcs.aws_route_table.private" -> "module.spoke_vpcs.aws_vpc.spoke";
+  "module.spoke_vpcs.aws_route_table.private" -> "module.transit_gateway.aws_ec2_transit_gateway.main";
+  "module.spoke_vpcs.aws_route_table_association.private" -> "module.spoke_vpcs.aws_route_table.private";
+  "module.spoke_vpcs.aws_route_table_association.private" -> "module.spoke_vpcs.aws_subnet.private";
+  "module.spoke_vpcs.aws_subnet.private" -> "module.spoke_vpcs.aws_vpc.spoke";
+  "module.transit_gateway.aws_ec2_transit_gateway_route.spoke_default_to_hub" -> "module.transit_gateway.aws_ec2_transit_gateway_route_table.spoke";
+  "module.transit_gateway.aws_ec2_transit_gateway_route.spoke_default_to_hub" -> "module.transit_gateway.aws_ec2_transit_gateway_vpc_attachment.hub";
+  "module.transit_gateway.aws_ec2_transit_gateway_route_table.hub" -> "module.transit_gateway.aws_ec2_transit_gateway.main";
+  "module.transit_gateway.aws_ec2_transit_gateway_route_table.spoke" -> "module.transit_gateway.aws_ec2_transit_gateway.main";
+  "module.transit_gateway.aws_ec2_transit_gateway_route_table_association.hub" -> "module.transit_gateway.aws_ec2_transit_gateway_route_table.hub";
+  "module.transit_gateway.aws_ec2_transit_gateway_route_table_association.hub" -> "module.transit_gateway.aws_ec2_transit_gateway_vpc_attachment.hub";
+  "module.transit_gateway.aws_ec2_transit_gateway_route_table_propagation.hub_to_spoke_rt" -> "module.transit_gateway.aws_ec2_transit_gateway_route_table.spoke";
+  "module.transit_gateway.aws_ec2_transit_gateway_route_table_propagation.hub_to_spoke_rt" -> "module.transit_gateway.aws_ec2_transit_gateway_vpc_attachment.hub";
+  "module.transit_gateway.aws_ec2_transit_gateway_vpc_attachment.hub" -> "module.hub_vpc.aws_subnet.private";
+  "module.transit_gateway.aws_ec2_transit_gateway_vpc_attachment.hub" -> "module.transit_gateway.aws_ec2_transit_gateway.main";
+  "module.transit_gateway.aws_route.hub_to_spokes" -> "module.hub_vpc.aws_route_table.private";
+  "module.transit_gateway.aws_route.hub_to_spokes" -> "module.transit_gateway.aws_ec2_transit_gateway_vpc_attachment.hub";
+}

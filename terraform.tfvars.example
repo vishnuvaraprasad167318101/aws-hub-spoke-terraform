@@ -1,0 +1,16 @@
+aws_region  = "us-east-1"
+environment = "prod"
+
+hub_vpc_cidr = "10.0.0.0/16"
+
+spokes = [
+  { name = "app",      vpc_cidr = "10.1.0.0/16" },
+  { name = "data",     vpc_cidr = "10.2.0.0/16" },
+  { name = "security", vpc_cidr = "10.3.0.0/16" },
+]
+
+availability_zones       = ["us-east-1a", "us-east-1b"]
+enable_flow_logs         = true
+flow_logs_retention_days = 30
+enable_config_recorder   = true
+alert_email              = "infra-alerts@yourdomain.com"
